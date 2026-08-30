@@ -6,12 +6,16 @@ in Supabase, WITHOUT triggering n8n or writing to actions_log. Produces
 a summary report: revenue at risk, revenue protected per lever, and a
 stopping-rule confirmation (one decision per customer, no duplicates).
 
+Also includes a synthetic recovery outcome simulation using illustrative
+success-rate assumptions per lever.
+
 Requires SUPABASE_URL and SUPABASE_ANON_KEY in .env, and model.pkl to
 already exist (run train_model.py first if not).
 """
 
 import os
 import json
+import random
 import datetime
 import requests
 import pandas as pd
@@ -32,6 +36,22 @@ HEADERS = {
 }
 
 RISK_THRESHOLD = 0.6
+
+# Illustrative simulated recovery probabilities per lever (literature-informed estimates)
+# NOTE: In production, these rates would be replaced with actual observed recovery outcomes from live interventions.
+RECOVERY_PROBABILITIES = {
+    "smart_retry": 0.45,
+    "payment_nudge": 0.55,
+    "downgrade": 0.70,
+    "pause": 0.60,
+    "winback_offer": 0.50,
+}
+
+RECOVERY_DISCLAIMER = (
+    "NOTE: Recovery outcomes below are SIMULATED using illustrative success-rate assumptions "
+    "per lever, not measured real-world data. In production, these rates would be replaced with "
+    "actual observed recovery outcomes from live interventions."
+)
 
 
 def fetch_all(table, select="*"):
@@ -94,6 +114,9 @@ def build_customer_features(customer, events):
 
 
 def main():
+    # Fixed seed for reproducible simulation draws
+    random.seed(42)
+
     print("Loading model artifact...")
     artifact = joblib.load("model.pkl")
     model = artifact["model"]
@@ -124,6 +147,12 @@ def main():
     high_risk_count = 0
     low_risk_count = 0
     duplicates_found = 0
+
+    # Simulated recovery tracking
+    recovered_count_total = 0
+    recovered_revenue_total = 0.0
+    recovered_by_lever_count = defaultdict(int)
+    recovered_by_lever_revenue = defaultdict(float)
 
     for cust in customers:
         cust_id = cust["id"]
@@ -170,28 +199,41 @@ def main():
         decision = decide_action(risk_score, features)
         action = decision["action"]
 
+        plan_val = features["plan_value"]
         action_counts[action] += 1
-        action_value[action] += features["plan_value"]
+        action_value[action] += plan_val
 
         if risk_score >= RISK_THRESHOLD:
             high_risk_count += 1
-            high_risk_value += features["plan_value"]
+            high_risk_value += plan_val
         else:
             low_risk_count += 1
+
+        # --- Simulated Recovery Outcome Simulation ---
+        recovery_prob = RECOVERY_PROBABILITIES.get(action, 0.50)
+        is_recovered = random.random() < recovery_prob
+
+        if is_recovered:
+            recovered_count_total += 1
+            recovered_revenue_total += plan_val
+            recovered_by_lever_count[action] += 1
+            recovered_by_lever_revenue[action] += plan_val
 
         results.append({
             "customer_id": cust_id,
             "name": cust["name"],
             "risk_score": round(risk_score, 4),
             "action": action,
-            "plan_value": features["plan_value"],
+            "plan_value": plan_val,
+            "simulated_recovery": is_recovered,
         })
 
     total = len(seen_customer_ids)
+    overall_recovery_rate_pct = (recovered_count_total / total * 100) if total > 0 else 0.0
 
-    print("\n" + "=" * 60)
+    print("\n" + "=" * 65)
     print("BATCH SIMULATION SUMMARY")
-    print("=" * 60)
+    print("=" * 65)
     print(f"Total customers processed: {total}")
     print(f"High-risk (>= {RISK_THRESHOLD}): {high_risk_count}")
     print(f"Low-risk: {low_risk_count}")
@@ -200,7 +242,22 @@ def main():
     for action, count in sorted(action_counts.items(), key=lambda x: -x[1]):
         print(f"  {action:20s} count={count:3d}   plan_value_covered=INR {action_value[action]:,.2f}")
     print(f"\nStopping rule check: {duplicates_found} duplicate customer decisions found (should be 0)")
-    print("=" * 60)
+    
+    print("\n" + "-" * 65)
+    print("SIMULATED RECOVERY OUTCOMES (ILLUSTRATIVE ESTIMATE)")
+    print("-" * 65)
+    print(f"{RECOVERY_DISCLAIMER}\n")
+    print(f"Total customers recovered: {recovered_count_total}/{total} ({overall_recovery_rate_pct:.1f}%)")
+    print(f"Total simulated revenue recovered: INR {recovered_revenue_total:,.2f}")
+    print("\nRecovery breakdown per lever:")
+    for action, total_count in sorted(action_counts.items(), key=lambda x: -x[1]):
+        rec_count = recovered_by_lever_count[action]
+        rec_rev = recovered_by_lever_revenue[action]
+        lever_prob_pct = RECOVERY_PROBABILITIES.get(action, 0.0) * 100
+        lever_rate_pct = (rec_count / total_count * 100) if total_count > 0 else 0.0
+        print(f"  {action:18s} recovered={rec_count:2d}/{total_count:2d} ({lever_rate_pct:5.1f}%) | "
+              f"rev_recovered=INR {rec_rev:9,.2f} | assumed_rate={lever_prob_pct:.0f}%")
+    print("=" * 65)
 
     summary = {
         "total_customers": total,
@@ -212,6 +269,24 @@ def main():
             for action, count in action_counts.items()
         },
         "duplicate_decisions_found": duplicates_found,
+        "simulated_recovery_outcomes": {
+            "disclaimer": RECOVERY_DISCLAIMER,
+            "assumed_recovery_probabilities": RECOVERY_PROBABILITIES,
+            "total_recovered_count": recovered_count_total,
+            "overall_recovery_rate_pct": round(overall_recovery_rate_pct, 2),
+            "total_revenue_recovered": round(recovered_revenue_total, 2),
+            "per_lever_recovery": {
+                action: {
+                    "total_interventions": action_counts[action],
+                    "recovered_count": recovered_by_lever_count[action],
+                    "recovery_rate_pct": round((recovered_by_lever_count[action] / action_counts[action] * 100), 2) if action_counts[action] > 0 else 0.0,
+                    "plan_value_covered": round(action_value[action], 2),
+                    "revenue_recovered": round(recovered_by_lever_revenue[action], 2),
+                    "assumed_probability": RECOVERY_PROBABILITIES.get(action, 0.0),
+                }
+                for action in action_counts
+            },
+        },
         "results": results,
     }
 

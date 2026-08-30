@@ -26,671 +26,821 @@
     }
   },
   "duplicate_decisions_found": 0,
+  "simulated_recovery_outcomes": {
+    "disclaimer": "NOTE: Recovery outcomes below are SIMULATED using illustrative success-rate assumptions per lever, not measured real-world data. In production, these rates would be replaced with actual observed recovery outcomes from live interventions.",
+    "assumed_recovery_probabilities": {
+      "smart_retry": 0.45,
+      "payment_nudge": 0.55,
+      "downgrade": 0.7,
+      "pause": 0.6,
+      "winback_offer": 0.5
+    },
+    "total_recovered_count": 58,
+    "overall_recovery_rate_pct": 61.05,
+    "total_revenue_recovered": 123442.0,
+    "per_lever_recovery": {
+      "downgrade": {
+        "total_interventions": 22,
+        "recovered_count": 18,
+        "recovery_rate_pct": 81.82,
+        "plan_value_covered": 36978.0,
+        "revenue_recovered": 30482.0,
+        "assumed_probability": 0.7
+      },
+      "payment_nudge": {
+        "total_interventions": 26,
+        "recovered_count": 13,
+        "recovery_rate_pct": 50.0,
+        "plan_value_covered": 32774.0,
+        "revenue_recovered": 17487.0,
+        "assumed_probability": 0.55
+      },
+      "winback_offer": {
+        "total_interventions": 19,
+        "recovered_count": 10,
+        "recovery_rate_pct": 52.63,
+        "plan_value_covered": 92981.0,
+        "revenue_recovered": 49490.0,
+        "assumed_probability": 0.5
+      },
+      "smart_retry": {
+        "total_interventions": 20,
+        "recovered_count": 10,
+        "recovery_rate_pct": 50.0,
+        "plan_value_covered": 40480.0,
+        "revenue_recovered": 18990.0,
+        "assumed_probability": 0.45
+      },
+      "pause": {
+        "total_interventions": 8,
+        "recovered_count": 7,
+        "recovery_rate_pct": 87.5,
+        "plan_value_covered": 8292.0,
+        "revenue_recovered": 6993.0,
+        "assumed_probability": 0.6
+      }
+    }
+  },
   "results": [
     {
       "customer_id": "11111111-1111-1111-1111-111111111101",
       "name": "Ravi Kumar",
       "risk_score": 0.841,
       "action": "downgrade",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "11111111-1111-1111-1111-111111111102",
       "name": "Sneha Patil",
       "risk_score": 0.9034,
       "action": "downgrade",
-      "plan_value": 1999.0
+      "plan_value": 1999.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "11111111-1111-1111-1111-111111111103",
       "name": "Arjun Mehta",
       "risk_score": 0.8028,
       "action": "downgrade",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "11111111-1111-1111-1111-111111111104",
       "name": "Priya Nair",
       "risk_score": 0.1584,
       "action": "payment_nudge",
-      "plan_value": 999.0
+      "plan_value": 999.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "11111111-1111-1111-1111-111111111105",
       "name": "Vikram Rao",
       "risk_score": 0.8058,
       "action": "payment_nudge",
-      "plan_value": 999.0
+      "plan_value": 999.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "11111111-1111-1111-1111-111111111106",
       "name": "Anjali Singh",
       "risk_score": 0.0187,
       "action": "payment_nudge",
-      "plan_value": 1299.0
+      "plan_value": 1299.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "11111111-1111-1111-1111-111111111107",
       "name": "Karthik Iyer",
       "risk_score": 0.4982,
       "action": "winback_offer",
-      "plan_value": 4999.0
+      "plan_value": 4999.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "11111111-1111-1111-1111-111111111108",
       "name": "Divya Menon",
       "risk_score": 0.2088,
       "action": "winback_offer",
-      "plan_value": 5999.0
+      "plan_value": 5999.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "11111111-1111-1111-1111-111111111109",
       "name": "Rohan Gupta",
       "risk_score": 0.3015,
       "action": "winback_offer",
-      "plan_value": 4499.0
+      "plan_value": 4499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "11111111-1111-1111-1111-111111111110",
       "name": "Meera Joshi",
       "risk_score": 0.0835,
       "action": "smart_retry",
-      "plan_value": 1999.0
+      "plan_value": 1999.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "11111111-1111-1111-1111-111111111111",
       "name": "Suresh Babu",
       "risk_score": 0.5975,
       "action": "smart_retry",
-      "plan_value": 1999.0
+      "plan_value": 1999.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "11111111-1111-1111-1111-111111111112",
       "name": "Lakshmi Reddy",
       "risk_score": 0.4718,
       "action": "smart_retry",
-      "plan_value": 2499.0
+      "plan_value": 2499.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "11111111-1111-1111-1111-111111111113",
       "name": "Farhan Ali",
       "risk_score": 0.9749,
       "action": "pause",
-      "plan_value": 999.0
+      "plan_value": 999.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "11111111-1111-1111-1111-111111111114",
       "name": "Neha Kapoor",
       "risk_score": 0.9901,
       "action": "downgrade",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "11111111-1111-1111-1111-111111111115",
       "name": "Sanjay Verma",
       "risk_score": 0.9737,
       "action": "pause",
-      "plan_value": 1299.0
+      "plan_value": 1299.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "e5997dd4-47a7-447c-8aff-d4aaf68d2474",
       "name": "Reyansh Sharma",
       "risk_score": 0.8406,
       "action": "downgrade",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "3cbd77cd-3c0d-48a2-a72c-fe8a71d4cd7c",
       "name": "Krishna Verma",
       "risk_score": 0.8775,
       "action": "downgrade",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "1e5ba3d9-adde-4b92-a961-2523d297f100",
       "name": "Ishaan Bhatt",
       "risk_score": 0.9899,
       "action": "downgrade",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "6cc93380-e6b8-429b-8f25-d3eea49e8515",
       "name": "Aryan Kulkarni",
       "risk_score": 0.548,
       "action": "smart_retry",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "d5ee31e1-bd89-47a5-afe3-7e87390d6956",
       "name": "Krishna Chopra",
       "risk_score": 0.922,
       "action": "downgrade",
-      "plan_value": 1999.0
+      "plan_value": 1999.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "3809191a-f105-422c-a5a5-925cabba1afb",
       "name": "Priya Gupta",
       "risk_score": 0.9472,
       "action": "downgrade",
-      "plan_value": 1999.0
+      "plan_value": 1999.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "50ba7654-23d4-411e-87bc-f9703c5d277b",
       "name": "Krishna Joshi",
       "risk_score": 0.7459,
       "action": "downgrade",
-      "plan_value": 1999.0
+      "plan_value": 1999.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "6c64824d-16f6-41d2-abc6-634c2a16d2ea",
       "name": "Isha Mehta",
       "risk_score": 0.7837,
       "action": "downgrade",
-      "plan_value": 1999.0
+      "plan_value": 1999.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "3fde5320-5c49-4202-ba5c-abaa2b5ee96d",
       "name": "Kabir Bhatt",
       "risk_score": 0.6856,
       "action": "downgrade",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "8c6a81a4-1b35-4555-87c1-a04dee83fe8d",
       "name": "Reyansh Rao",
       "risk_score": 0.9188,
       "action": "downgrade",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "843df1af-7086-4c50-898a-81ef6809b8d7",
       "name": "Krishna Nair",
       "risk_score": 0.9207,
       "action": "downgrade",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "1be6cd91-05e4-448a-b536-e0899ac790eb",
       "name": "Rohan Malhotra",
       "risk_score": 0.7459,
       "action": "downgrade",
-      "plan_value": 1999.0
+      "plan_value": 1999.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "761a05bd-6ea1-4c26-bd7a-c56c916d61ed",
       "name": "Riya Gupta",
       "risk_score": 0.6095,
       "action": "downgrade",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "6e7886a2-888c-4cc3-a1b5-ba4bc8afb3a7",
       "name": "Ananya Reddy",
       "risk_score": 0.6998,
       "action": "downgrade",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "7ea87650-6dd0-4ca7-9636-901b0aa64c33",
       "name": "Karan Malhotra",
       "risk_score": 0.9559,
       "action": "downgrade",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "ecaac121-68a4-4631-89c1-766a2818524f",
       "name": "Nikhil Kapoor",
       "risk_score": 0.3716,
       "action": "smart_retry",
-      "plan_value": 1999.0
+      "plan_value": 1999.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "63babae7-9f4f-44a4-b8ce-481bfaa1ba94",
       "name": "Krishna Chauhan",
       "risk_score": 0.0595,
       "action": "payment_nudge",
-      "plan_value": 999.0
+      "plan_value": 999.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "22be715c-e538-4365-a683-b67ab7b11890",
       "name": "Sneha Sharma",
       "risk_score": 0.6783,
       "action": "payment_nudge",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "03b60712-1152-4372-bb0f-c0317ecf70c4",
       "name": "Aarav Chopra",
       "risk_score": 0.2673,
       "action": "payment_nudge",
-      "plan_value": 999.0
+      "plan_value": 999.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "71a3ac09-52a6-47cb-97db-c894798eebc8",
       "name": "Sneha Bose",
       "risk_score": 0.4077,
       "action": "payment_nudge",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "755db77b-44d8-4aba-8d8c-137902d5c52d",
       "name": "Nikhil Iyer",
       "risk_score": 0.0426,
       "action": "payment_nudge",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "1745bdfc-6cd9-42d4-81b2-1f7af64cdade",
       "name": "Vivaan Pillai",
       "risk_score": 0.0503,
       "action": "payment_nudge",
-      "plan_value": 999.0
+      "plan_value": 999.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "f3765e8d-78ce-45ab-a1ef-f74afc1d9263",
       "name": "Tanvi Bose",
       "risk_score": 0.5379,
       "action": "payment_nudge",
-      "plan_value": 999.0
+      "plan_value": 999.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "508ea6f8-d977-49d2-bb97-6d5179ea620b",
       "name": "Priya Gupta",
       "risk_score": 0.3974,
       "action": "payment_nudge",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "8b609650-70e9-41de-bf74-94bad8c07cfe",
       "name": "Myra Kapoor",
       "risk_score": 0.0508,
       "action": "payment_nudge",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "10ed213f-fcfd-4154-b391-ea564f1b9147",
       "name": "Yash Joshi",
       "risk_score": 0.0154,
       "action": "payment_nudge",
-      "plan_value": 999.0
+      "plan_value": 999.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "7212ca76-cc6b-4475-aabb-4b1ba9796fba",
       "name": "Vihaan Reddy",
       "risk_score": 0.2022,
       "action": "payment_nudge",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "2ecb409b-37d0-4008-9940-11461184060a",
       "name": "Kavya Nair",
       "risk_score": 0.8577,
       "action": "payment_nudge",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "8ea17809-9817-4021-b54a-ce94f3e3018b",
       "name": "Arjun Agarwal",
       "risk_score": 0.8178,
       "action": "payment_nudge",
-      "plan_value": 999.0
+      "plan_value": 999.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "26286818-c3c0-4c85-ae76-66c53e39abf6",
       "name": "Priya Verma",
       "risk_score": 0.0194,
       "action": "payment_nudge",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "eb4d6b36-ebce-4ec2-adb6-1990d4dfd29e",
       "name": "Meera Pillai",
       "risk_score": 0.4077,
       "action": "payment_nudge",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "ccc261b4-f7ee-4d49-bdaa-286b1a64902b",
       "name": "Priya Sharma",
       "risk_score": 0.5052,
       "action": "payment_nudge",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "64ac8a59-44ea-423e-94ac-bcda614256f5",
       "name": "Aditya Gupta",
       "risk_score": 0.0722,
       "action": "winback_offer",
-      "plan_value": 4999.0
+      "plan_value": 4999.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "56c10445-a40f-46ed-a174-956e16321b28",
       "name": "Neha Nair",
       "risk_score": 0.0742,
       "action": "winback_offer",
-      "plan_value": 4999.0
+      "plan_value": 4999.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "711db494-7af6-41d5-8de9-c8f0c2e0ce5d",
       "name": "Kavya Agarwal",
       "risk_score": 0.5562,
       "action": "winback_offer",
-      "plan_value": 4499.0
+      "plan_value": 4499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "8955e894-70de-4c0e-aa74-7a595d26d008",
       "name": "Ishaan Pillai",
       "risk_score": 0.2447,
       "action": "winback_offer",
-      "plan_value": 4999.0
+      "plan_value": 4999.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "9ea755c1-d4e1-4600-a0cd-4d8a9400dccb",
       "name": "Ananya Gupta",
       "risk_score": 0.4353,
       "action": "winback_offer",
-      "plan_value": 4999.0
+      "plan_value": 4999.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "369910ff-be5b-4226-ae6a-a38052a7ae17",
       "name": "Dev Kapoor",
       "risk_score": 0.3136,
       "action": "winback_offer",
-      "plan_value": 4999.0
+      "plan_value": 4999.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "a6095cef-1e76-4914-aaff-334da1717cd9",
       "name": "Isha Menon",
       "risk_score": 0.1958,
       "action": "winback_offer",
-      "plan_value": 4999.0
+      "plan_value": 4999.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "3cf2e4b2-e52c-4b0d-8672-fe84043333b0",
       "name": "Ananya Chauhan",
       "risk_score": 0.3696,
       "action": "winback_offer",
-      "plan_value": 4999.0
+      "plan_value": 4999.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "7b66e7f2-6e88-4d8a-98dc-f28e3246725d",
       "name": "Ananya Mehta",
       "risk_score": 0.371,
       "action": "winback_offer",
-      "plan_value": 4499.0
+      "plan_value": 4499.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "fb8e6053-1506-41de-819f-d9aa257adb7a",
       "name": "Pooja Bose",
       "risk_score": 0.4634,
       "action": "winback_offer",
-      "plan_value": 4499.0
+      "plan_value": 4499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "d9304316-3a68-4f9d-9515-5953e20e0012",
       "name": "Sai Kulkarni",
       "risk_score": 0.1382,
       "action": "winback_offer",
-      "plan_value": 4499.0
+      "plan_value": 4499.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "1a4d29aa-abaa-4f29-99f9-29775a5e0626",
       "name": "Vivaan Bose",
       "risk_score": 0.1785,
       "action": "winback_offer",
-      "plan_value": 4999.0
+      "plan_value": 4999.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "2613c9d2-b61c-4f71-a20d-cc9dcceff904",
       "name": "Myra Sharma",
       "risk_score": 0.2276,
       "action": "winback_offer",
-      "plan_value": 4999.0
+      "plan_value": 4999.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "07325c2e-3760-4d4f-a15f-e5cb16637043",
       "name": "Tanvi Sharma",
       "risk_score": 0.5159,
       "action": "winback_offer",
-      "plan_value": 4999.0
+      "plan_value": 4999.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "5def6f78-51bd-4ab9-8248-7a979ccec7af",
       "name": "Krishna Desai",
       "risk_score": 0.0883,
       "action": "winback_offer",
-      "plan_value": 4999.0
+      "plan_value": 4999.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "8f0e74a3-ea7a-4c19-ac89-032a545c1fe4",
       "name": "Kabir Pillai",
       "risk_score": 0.0928,
       "action": "winback_offer",
-      "plan_value": 4499.0
+      "plan_value": 4499.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "b32604f7-e89e-48f8-8459-e36e0d04427f",
       "name": "Vihaan Menon",
       "risk_score": 0.8738,
       "action": "downgrade",
-      "plan_value": 2499.0
+      "plan_value": 2499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "39b44160-6474-4f68-a815-d73ebaf8f9a1",
       "name": "Neha Agarwal",
       "risk_score": 0.3043,
       "action": "smart_retry",
-      "plan_value": 2499.0
+      "plan_value": 2499.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "8898e361-6e0e-42a6-93e5-cc0abdf429ad",
       "name": "Nikhil Malhotra",
       "risk_score": 0.247,
       "action": "smart_retry",
-      "plan_value": 2499.0
+      "plan_value": 2499.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "1fcbbe58-0dc9-4c35-8e5f-cb2962a0db32",
       "name": "Vivaan Desai",
       "risk_score": 0.821,
       "action": "smart_retry",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "3f798589-12ed-4105-a0a3-d6172d3b0fd2",
       "name": "Saanvi Gupta",
       "risk_score": 0.5447,
       "action": "smart_retry",
-      "plan_value": 2499.0
+      "plan_value": 2499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "78c75135-9f94-48b0-8318-2e13962cde8d",
       "name": "Neha Nair",
       "risk_score": 0.5122,
       "action": "smart_retry",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "b34ace67-7f2e-40f4-99b7-220906916168",
       "name": "Aryan Menon",
       "risk_score": 0.6837,
       "action": "smart_retry",
-      "plan_value": 2499.0
+      "plan_value": 2499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "cd5754a0-45aa-428b-91d3-f1523158de8c",
       "name": "Raj Reddy",
       "risk_score": 0.5779,
       "action": "smart_retry",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "9fdb5024-2218-44fc-85cc-42315ee30fdb",
       "name": "Kabir Desai",
       "risk_score": 0.2048,
       "action": "smart_retry",
-      "plan_value": 2499.0
+      "plan_value": 2499.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "e80ba778-e256-482c-8953-b5b29d84412d",
       "name": "Sneha Malhotra",
       "risk_score": 0.1598,
       "action": "smart_retry",
-      "plan_value": 2499.0
+      "plan_value": 2499.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "fec060fe-d164-4cfb-b2c4-f43f2440990b",
       "name": "Saanvi Kapoor",
       "risk_score": 0.2507,
       "action": "smart_retry",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "46f56232-8e34-4f84-8ab4-46d1398b4175",
       "name": "Nikhil Sharma",
       "risk_score": 0.106,
       "action": "smart_retry",
-      "plan_value": 2499.0
+      "plan_value": 2499.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "376b5110-b11b-41f5-a2cf-b8ddf34ea4ee",
       "name": "Ananya Pillai",
       "risk_score": 0.247,
       "action": "smart_retry",
-      "plan_value": 2499.0
+      "plan_value": 2499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "611ff55f-576e-4bf6-a365-8f217fb0acd0",
       "name": "Ishaan Pillai",
       "risk_score": 0.5921,
       "action": "smart_retry",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "6ef8b455-de0a-49ac-9694-ee6a2453420b",
       "name": "Meera Joshi",
       "risk_score": 0.6895,
       "action": "smart_retry",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "5d4bd4cd-14a8-48b7-9085-f4df3247f8f6",
       "name": "Meera Bose",
       "risk_score": 0.7535,
       "action": "smart_retry",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "834f020a-4bd8-42ae-b5a6-0f4d4ee49119",
       "name": "Sneha Sharma",
       "risk_score": 0.9316,
       "action": "pause",
-      "plan_value": 999.0
+      "plan_value": 999.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "624e85a9-fbce-416a-bda9-332a6ea8f086",
       "name": "Krishna Bhatt",
       "risk_score": 0.8822,
       "action": "pause",
-      "plan_value": 999.0
+      "plan_value": 999.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "aa9de19a-fc11-4e91-9538-52c6012974d0",
       "name": "Vihaan Kulkarni",
       "risk_score": 0.4783,
       "action": "payment_nudge",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "c1c468b9-0eb7-4ca8-b7d9-01103e63898e",
       "name": "Nikhil Pillai",
       "risk_score": 0.9513,
       "action": "pause",
-      "plan_value": 999.0
+      "plan_value": 999.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "9153d54c-d72e-4358-8bb5-9040bdbb48bb",
       "name": "Dev Gupta",
       "risk_score": 0.9433,
       "action": "downgrade",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "25b11495-7b67-4317-9ca8-db6c9672662f",
       "name": "Myra Iyer",
       "risk_score": 0.7504,
       "action": "pause",
-      "plan_value": 999.0
+      "plan_value": 999.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "d70ebd91-8194-4ade-8fa3-d56c1cbc2009",
       "name": "Vivaan Iyer",
       "risk_score": 0.8151,
       "action": "downgrade",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "0d0cfef7-27f5-4aca-b119-33807199d244",
       "name": "Aryan Nair",
       "risk_score": 0.9386,
       "action": "payment_nudge",
-      "plan_value": 999.0
+      "plan_value": 999.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "94fa59fe-7aa0-4868-a4ce-2b8decd93188",
       "name": "Diya Kulkarni",
       "risk_score": 0.4847,
       "action": "payment_nudge",
-      "plan_value": 999.0
+      "plan_value": 999.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "54eedf60-6dfb-4367-b200-a0cb643750c8",
       "name": "Aarohi Bhatt",
       "risk_score": 0.8644,
       "action": "downgrade",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "3954bc63-660b-4250-a081-e68c2bc9e308",
       "name": "Aarav Menon",
       "risk_score": 0.9025,
       "action": "payment_nudge",
-      "plan_value": 999.0
+      "plan_value": 999.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "bb75a0d8-68a4-472e-a8ff-87f6bd79b29e",
       "name": "Aadhya Agarwal",
       "risk_score": 0.9871,
       "action": "pause",
-      "plan_value": 999.0
+      "plan_value": 999.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "a943eb2f-1533-444c-84a0-9426ee1a63f6",
       "name": "Anika Iyer",
       "risk_score": 0.4847,
       "action": "payment_nudge",
-      "plan_value": 999.0
+      "plan_value": 999.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "95c9de1a-35b9-4d78-902c-289c31e9499f",
       "name": "Rohan Verma",
       "risk_score": 0.4409,
       "action": "payment_nudge",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": false
     },
     {
       "customer_id": "c1d37648-cbec-4b7a-99dc-1192f9b85281",
       "name": "Kabir Menon",
       "risk_score": 0.4783,
       "action": "payment_nudge",
-      "plan_value": 1499.0
+      "plan_value": 1499.0,
+      "simulated_recovery": true
     },
     {
       "customer_id": "68c256ef-d69a-49a6-8a22-54bca853212b",
       "name": "Kabir Chopra",
       "risk_score": 0.862,
       "action": "pause",
-      "plan_value": 999.0
+      "plan_value": 999.0,
+      "simulated_recovery": true
     }
   ]
 }
