@@ -165,6 +165,12 @@ Given only a `customer_id`, fetches real customer + payment event history from S
 - No rate limiting or idempotency keys on action-triggering endpoints yet — a repeated call for the same event could re-trigger the same retention action
 - Timestamps in Supabase are stored in UTC by default (standard practice, not a bug)
 
-This project uses free/trial-tier cloud services (n8n Cloud, Supabase) for the live automation layer. The demo video and screenshots in `docs/` show the full 
-system working end-to-end. If you'd like to see it running live, reach out and I'm happy to re-activate or walk through it.
+## Live Demo Note
+
+The automation layer (n8n Cloud, Supabase) runs on free/trial-tier cloud services for this submission. If you're reviewing this after the live services have paused or expired:
+
+- **Screenshots:** see `docs/` for the n8n workflow canvas, a successful API response, and a logged `actions_log` row.
+- **Workflow export:** [`n8n/retention-workflow.json`](./n8n/retention-workflow.json) can be imported into any n8n instance to inspect the exact automation logic.
+
+If you'd like to see it running live, reach out — happy to re-activate the services or walk through it directly.
 Email:chintakuntaharshavardhanreddy@gmail.com
