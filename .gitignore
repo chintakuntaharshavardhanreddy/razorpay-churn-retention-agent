@@ -1,0 +1,17 @@
+# Environment files and secrets
+.env
+.env.*
+_env
+_env.*
+!.env.template
+!_env.template
+
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.pkl
+
+# Virtual environment
+venv/
+.venv/
