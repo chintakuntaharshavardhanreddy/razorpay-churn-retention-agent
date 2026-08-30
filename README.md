@@ -167,4 +167,4 @@ Given only a `customer_id`, fetches real customer + payment event history from S
 
 This project uses free/trial-tier cloud services (n8n Cloud, Supabase) for the live automation layer. The demo video and screenshots in `docs/` show the full 
 system working end-to-end. If you'd like to see it running live, reach out and I'm happy to re-activate or walk through it.
-**Email:**chintakuntaharshavardhanreddy@gmail.com
+Email:chintakuntaharshavardhanreddy@gmail.com
