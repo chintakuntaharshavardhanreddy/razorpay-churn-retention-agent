@@ -164,3 +164,7 @@ Given only a `customer_id`, fetches real customer + payment event history from S
 - Trained on synthetic data — real-world churn patterns would require retraining on production data
 - No rate limiting or idempotency keys on action-triggering endpoints yet — a repeated call for the same event could re-trigger the same retention action
 - Timestamps in Supabase are stored in UTC by default (standard practice, not a bug)
+
+This project uses free/trial-tier cloud services (n8n Cloud, Supabase) for the live automation layer. The demo video and screenshots in `docs/` show the full 
+system working end-to-end. If you'd like to see it running live, reach out and I'm happy to re-activate or walk through it.
+**Email:**chintakuntaharshavardhanreddy@gmail.com
