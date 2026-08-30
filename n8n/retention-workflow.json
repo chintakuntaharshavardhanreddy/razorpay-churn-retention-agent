@@ -1,0 +1,611 @@
+{
+  "name": "Retention Action Executor",
+  "nodes": [
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $json.body.action }}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "pause"
+            },
+            {
+              "value2": "downgrade",
+              "output": 1
+            },
+            {
+              "value2": "smart_retry",
+              "output": 2
+            },
+            {
+              "value2": "winback_offer",
+              "output": 3
+            },
+            {
+              "value2": "payment_nudge",
+              "output": 3
+            }
+          ]
+        }
+      },
+      "id": "86466ebc-6aba-4d2f-8cea-603078f9916c",
+      "name": "Switch - Route by Action",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        176,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.razorpay.com/v1/subscriptions/{{ $json.body.subscription_id }}/pause",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "pause_at",
+              "value": "now"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "70d3011a-2b3e-4ea0-9038-94bddb93ac77",
+      "name": "Razorpay - Pause Subscription",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        416,
+        -128
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "LdUDqKtjIveAX1JL",
+          "name": "Unnamed credential"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.resend.com/emails",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "from",
+              "value": "onboarding@resend.dev"
+            },
+            {
+              "name": "to",
+              "value": "={{ $json.body.customer_email }}"
+            },
+            {
+              "name": "subject",
+              "value": "Your subscription has been paused"
+            },
+            {
+              "name": "html",
+              "value": "=<p>Hi {{ $json.customer_name }},</p><p>We noticed some trouble with recent payments, so we've paused your subscription instead of cancelling it. You can resume anytime from your dashboard.</p>"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "02b85def-fc10-4081-910a-2e002b5374d2",
+      "name": "Resend - Pause Email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        672,
+        -128
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "jRLYO727MrOVrkOU",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.razorpay.com/v1/subscriptions/{{ $json.body.subscription_id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "plan_id",
+              "value": "={{ $json.downgrade_plan_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "631a5edb-e00d-4e0f-8138-d20d8277b471",
+      "name": "Razorpay - Downgrade Plan",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        416,
+        32
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "LdUDqKtjIveAX1JL",
+          "name": "Unnamed credential"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.resend.com/emails",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "from",
+              "value": "onboarding@resend.dev"
+            },
+            {
+              "name": "to",
+              "value": "={{ $json.body.customer_email }}"
+            },
+            {
+              "name": "subject",
+              "value": "We've moved you to a lighter plan"
+            },
+            {
+              "name": "html",
+              "value": "=<p>Hi {{ $json.customer_name }},</p><p>We've switched you to a more affordable plan so you can keep your subscription without the payment stress.</p>"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "04228c74-1da5-45fb-acc1-90b39b72fb72",
+      "name": "Resend - Downgrade Email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        672,
+        32
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "jRLYO727MrOVrkOU",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 6,
+        "unit": "seconds"
+      },
+      "id": "a42c81d0-88d2-4874-9e92-e449bb56416e",
+      "name": "Wait - Smart Retry Delay",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        416,
+        176
+      ],
+      "webhookId": "89a24364-8970-436c-9040-9408a5a1a823",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.razorpay.com/v1/payments/{{ $json.body.payment_id }}/retry",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "id": "646f931f-4a03-4c85-a7f3-90ac95d63b58",
+      "name": "Razorpay - Retry Payment",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        672,
+        176
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "LdUDqKtjIveAX1JL",
+          "name": "Unnamed credential"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.resend.com/emails",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "from",
+              "value": "onboarding@resend.dev"
+            },
+            {
+              "name": "to",
+              "value": "={{ $json.customer_email }}"
+            },
+            {
+              "name": "subject",
+              "value": "A little something to keep you with us"
+            },
+            {
+              "name": "html",
+              "value": "=<p>Hi {{ $json.customer_name }},</p><p>As a valued customer, here's 20% off your next billing cycle. We'd love to keep you around.</p>"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9f44e2de-46ec-4b22-9625-e6121833e0f6",
+      "name": "Resend - Winback Offer Email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        416,
+        352
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "jRLYO727MrOVrkOU",
+          "name": "Header Auth account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.resend.com/emails",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "from",
+              "value": "onboarding@resend.dev"
+            },
+            {
+              "name": "to",
+              "value": "={{ $json.body.customer_email }}"
+            },
+            {
+              "name": "subject",
+              "value": "Quick fix for your recent payment issue"
+            },
+            {
+              "name": "html",
+              "value": "=<p>Hi {{ $json.customer_name }},</p><p>We noticed your card payments have been failing. Try switching to UPI for smoother, uninterrupted billing.</p>"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "53911fdd-f5dc-4623-9fe9-e6338100c8a1",
+      "name": "Resend - Payment Nudge Email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        784,
+        432
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "jRLYO727MrOVrkOU",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://bnmjklsjubgbsgetlneh.supabase.co/rest/v1/actions_log?id=eq.{{ $('Webhook - Receive Decision').item.json.body.action_log_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "YOUR_SUPABASE_ANON_KEY"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_SUPABASE_ANON_KEY"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "outcome",
+              "value": "success"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4600bd15-d9a5-4dc4-af88-3c93abddce1b",
+      "name": "Supabase - Log Outcome",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        928,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "558e6b90-cb35-4a96-b32e-ee2ad10316a5",
+              "leftValue": "={{$json.body.action}}",
+              "rightValue": "winback_offer",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        448,
+        560
+      ],
+      "id": "4adfa721-4982-4bfd-a780-bde1f26ca816",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "b7fd6f9b-a76b-4e1b-a430-b68e63091a0e",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -160,
+        208
+      ],
+      "id": "9118e2ac-e50f-4e87-9640-b43ef055fcab",
+      "name": "Webhook - Receive Decision",
+      "webhookId": "b7fd6f9b-a76b-4e1b-a430-b68e63091a0e"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Switch - Route by Action": {
+      "main": [
+        [
+          {
+            "node": "Razorpay - Pause Subscription",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Razorpay - Downgrade Plan",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait - Smart Retry Delay",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Razorpay - Pause Subscription": {
+      "main": [
+        [
+          {
+            "node": "Resend - Pause Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Resend - Pause Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resend - Pause Email": {
+      "main": [
+        [
+          {
+            "node": "Supabase - Log Outcome",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Razorpay - Downgrade Plan": {
+      "main": [
+        [
+          {
+            "node": "Resend - Downgrade Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Resend - Downgrade Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resend - Downgrade Email": {
+      "main": [
+        [
+          {
+            "node": "Supabase - Log Outcome",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait - Smart Retry Delay": {
+      "main": [
+        [
+          {
+            "node": "Razorpay - Retry Payment",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Razorpay - Retry Payment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Razorpay - Retry Payment": {
+      "main": [
+        [
+          {
+            "node": "Supabase - Log Outcome",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Supabase - Log Outcome",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resend - Winback Offer Email": {
+      "main": [
+        [
+          {
+            "node": "Supabase - Log Outcome",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Supabase - Log Outcome",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resend - Payment Nudge Email": {
+      "main": [
+        [
+          {
+            "node": "Supabase - Log Outcome",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Resend - Winback Offer Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Resend - Payment Nudge Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook - Receive Decision": {
+      "main": [
+        [
+          {
+            "node": "Switch - Route by Action",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "4c9189fd-0663-465c-8888-e1d45d440759",
+  "meta": {
+    "instanceId": "b26614523d174db62d0385050a8df75744504c31f49cf8c2246c552889211467"
+  },
+  "nodeGroups": [],
+  "id": "7LPcW9xthq8VXUl8",
+  "tags": []
+}
