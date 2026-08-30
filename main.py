@@ -265,16 +265,18 @@ async def simulate_payment_failure(req: SimulateRequest):
             # Handle ISO formatting securely across Python versions
             dt_str = e.get("attempted_at", "").replace("Z", "+00:00")
             dt = datetime.datetime.fromisoformat(dt_str)
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=datetime.timezone.utc)
             days_diff = (now - dt).days
 
-            if days_diff <= 30:
+            if 0 <= days_diff <= 30:
                 failures_30d += 1
                 r = e.get("failure_reason", "none")
                 reasons[r] = reasons.get(r, 0) + 1
                 if days_diff < days_since:
                     days_since = days_diff
-        except Exception:
-            pass
+        except Exception as e:
+            print(f"Error parsing event: {e}")
 
     dominant_reason = "none"
     if reasons:
