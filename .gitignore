@@ -3,8 +3,7 @@
 .env.*
 _env
 _env.*
-!.env.template
-!_env.template
+!.env.example
 
 # Python bytecode & cache
 __pycache__/

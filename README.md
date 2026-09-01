@@ -78,7 +78,7 @@ All five branches were validated end-to-end via `/simulate-payment-failure`, wit
 pip install -r requirements.txt
 
 # 2. Set up environment variables
-cp .env.template .env
+cp .env.example .env
 # fill in SUPABASE_URL, SUPABASE_ANON_KEY, N8N_WEBHOOK_URL, API_KEY
 
 # 3. Generate synthetic training data (200 customers, 5 archetypes)
@@ -150,7 +150,10 @@ Given only a `customer_id`, fetches real customer + payment event history from S
 │   └── retention-workflow.json   # Exported n8n automation workflow
 ├── docs/
 │   └── n8n-workflow-screenshot.png
-└── .env.template          # Environment variable template
+├── sql/
+│   ├── schema.sql            # Supabase table definitions
+│   └── seed.sql              # Seed data for initial 15 customers
+└── .env.example          # Environment variable template
 ```
 
 ## Model Performance

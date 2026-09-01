@@ -1,9 +1,0 @@
-# API Security
-API_KEY="your-secret-api-key"
-
-# n8n Webhook Configuration
-N8N_WEBHOOK_URL="https://your-n8n-instance.com/webhook/churn-retention-action"
-
-# Supabase Configuration
-SUPABASE_URL="https://your-project-ref.supabase.co"
-SUPABASE_ANON_KEY="your-anon-key"

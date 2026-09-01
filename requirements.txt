@@ -6,4 +6,5 @@ xgboost
 joblib
 numpy
 httpx
+requests
 python-dotenv
