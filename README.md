@@ -175,5 +175,5 @@ The automation layer (n8n Cloud, Supabase) runs on free/trial-tier cloud service
 - **Screenshots:** see `docs/` for the n8n workflow canvas, a successful API response, and a logged `actions_log` row.
 - **Workflow export:** [`n8n/retention-workflow.json`](./n8n/retention-workflow.json) can be imported into any n8n instance to inspect the exact automation logic.
 
-If you'd like to see it running live, reach out — happy to re-activate the services or walk through it directly.
+If you'd like to see it running live, reach out —  happy to re-activate the services or walk through it directly.
 Email:chintakuntaharshavardhanreddy@gmail.com
